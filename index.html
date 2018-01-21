@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Mathworks R2017a</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/codemirror.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="">Home</a></li>
+            <li><a data-toggle="tab" href="">Plots</a></li>
+            <li><a data-toggle="tab" href="">Apps</a></li>
+            <li class="active" href="#!/editor"><a data-toggle="tab" href="#">Editor</a></li>
+            <li><a data-toggle="tab" href="">Publish</a></li>
+            <li><a data-toggle="tab" href="">View</a></li>
+        </ul>
+    </div>
+  </nav>
+
+  <div ng-view>
+    <div class="container-fluid">
+      <div class="row" style="background-color: #f8f8f8;">
+        <div class="col-sm-2">
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group-vertical">
+              <button type="button" class="btn btn-primary">P</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;">
+                Insert Property <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li style="text-align: center;">PUBLIC</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a onclick="addNumericProperty()">Numeric</a></li>
+                  <li><a href="#">Logical</a></li>
+                  <li><a href="#">String Set...</a></li>
+                  <li><a href="#">Positive Integer</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Tunable Numeric</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li style="text-align: center;">RESTRICTED</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Private</a></li>
+                  <li><a href="#">Protected</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li style="text-align: center;">CUSTOM</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Custom Property...</a></li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
+      </div>
+      <div>
+        
+        <textarea id="code" name="code" ng-model="classDef">
+          
+        </textarea>
+        
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.min.js"></script>
+  <script src="lib/codemirror.js"></script>
+  <script src="lib/octave.js"></script>
+  
+  <script src="editor/properties/properties.js"></script>
+  <script src="editor/properties/constants.js"></script>
+  <script src="editor/properties/property.js"></script>
+  <script src="class.js"></script>
+  <script src="editor/editor.js"></script>
+  <script src="app.js"></script>
+  
+</body>
+</html>
