@@ -24,7 +24,7 @@
     </div>
   </nav>
 
-  <div ng-view>
+  <div>
     <div class="container-fluid">
       <div class="row" style="background-color: #f8f8f8;">
         <div class="col-sm-2">
@@ -50,7 +50,7 @@
                   <li role="separator" class="divider"></li>
                   <li style="text-align: center;">CUSTOM</li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#">Custom Property...</a></li>
+                  <li><a data-toggle="modal" data-target="#myModal">Custom Property...</a></li>
                 </ul>
             </div>
           </div>
@@ -60,10 +60,76 @@
       </div>
       <div>
         
-        <textarea id="code" name="code" ng-model="classDef">
+        <textarea id="code" name="code">
           
         </textarea>
         
+      </div>
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Custom Property</h4>
+            </div>
+            <div class="modal-body">
+              <label for="Access">Access</label>
+              <form class="form-inline">
+                <div class="form-group">
+                  <span>SetAccess : </span>
+                  <select class="form-control" id="SetAccessSelection">
+                    <option>public</option>
+                    <option>protected</option>
+                    <option>private</option>
+                    <option>immutable</option>
+                  </select>
+                  <span>GetAccess : </span>
+                  <select class="form-control" id="GetAccessSelection">
+                    <option>public</option>
+                    <option>protected</option>
+                    <option>private</option>
+                  </select>
+                </div>
+              </form>
+              <br />
+              <label for="SOAttributes">System Object Attributes</label>
+              <br />
+              <label class="checkbox-inline">
+                <input type="checkbox" id="LogicalCheckbox" value="logical" onclick="logicalCheckboxValueChanged(this)">Logical
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="NontunableCheckbox" value="nonTunable" onclick="nonTunableCheckboxValueChanged(this)">Nontunable
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="DiscreteStateCheckbox" value="discreteState" onclick="discreteStateCheckboxValueChanged(this)">DiscreteState
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="PositiveIntegerCheckbox" value="PositiveInteger" onclick="positiveIntegerCheckboxValueChanged(this)">PositiveInteger
+              </label>
+              <br />
+              <br />
+              <label for="MPAttributes">Matlab Property Attributes</label>
+              <br />
+              <label class="checkbox-inline">
+                <input type="checkbox" id="ConstantCheckbox" value="constant" onclick="constantCheckboxValueChanged(this)">Constant
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="HiddenCheckbox" value="hidden">Hidden
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="DependentCheckbox" value="dependent" onclick="dependentCheckboxValueChanged(this)">Dependent
+              </label>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="insertCustomProperty()">Insert</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
