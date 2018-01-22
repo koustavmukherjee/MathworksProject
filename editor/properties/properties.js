@@ -38,6 +38,10 @@ Properties = (function(){
 								break;
 					case 5: 	propertyArgument = Properties.constants.hiddenEnum[ch];
 								break;
+					case 6: 	propertyArgument = Properties.constants.discreteStateEnum[ch];
+								break;
+					case 7: 	propertyArgument = Properties.constants.dependentEnum[ch];
+								break;
 					default: 	ch += '';
 								break;
 				}

@@ -51,6 +51,24 @@ Properties.constants = (function() {
 
 		hiddenReverseEnum: {
 			'Hidden': 1
+		},
+
+		discreteStateEnum: {
+			0: '', //NOT DISCRETE STATE
+			1: 'DiscreteState'
+		},
+
+		discreteStateReverseEnum: {
+			'DiscreteState': 1
+		},
+
+		dependentEnum: {
+			0: '', //NOT DISCRETE STATE
+			1: 'Dependent'
+		},
+
+		dependentReverseEnum: {
+			'Dependent': 1
 		}
 	}
 })();

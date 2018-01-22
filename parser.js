@@ -122,6 +122,14 @@ Parser = (function(input) {
 				propertyHeader.isHidden = Properties.constants.hiddenReverseEnum[lookAheadToken.value];
 				this.consume(lookAheadToken.value);
 			}
+			else if(typeof Properties.constants.discreteStateReverseEnum[lookAheadToken.value] !== 'undefined') {
+				propertyHeader.isDiscreteState = Properties.constants.discreteStateReverseEnum[lookAheadToken.value];
+				this.consume(lookAheadToken.value);
+			}
+			else if(typeof Properties.constants.dependentReverseEnum[lookAheadToken.value] !== 'undefined') {
+				propertyHeader.isDependent = Properties.constants.dependentReverseEnum[lookAheadToken.value];
+				this.consume(lookAheadToken.value);
+			}
 			else {
 				throw new Error("Parser: Syntax error detected at parse property header. Unexpected Keyword encountered " + lookAheadToken.value);
 			}
@@ -161,6 +169,8 @@ Parser = (function(input) {
 				property.isTunable = propertyHeader.isTunable;
 				property.isConstant = propertyHeader.isConstant;
 				property.isHidden = propertyHeader.isHidden;
+				property.isDiscreteState = propertyHeader.isDiscreteState;
+				property.isDependent = propertyHeader.isDependent;
 				return property;
 			}
 		},

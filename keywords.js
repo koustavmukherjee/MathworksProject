@@ -14,6 +14,8 @@ Keywords = (function() {
 		'GetAccess': 12,
 		'SetAccess': 13,
 		'end': 14,
-		'classdef': 15
+		'classdef': 15,
+		'DiscreteState':16,
+		'Dependent':17
 	}
 })();

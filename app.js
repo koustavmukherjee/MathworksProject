@@ -23,7 +23,7 @@ var addLogicalProperty = function() {
 var addPositiveInteger = function() {
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),1,1,2,0,0,0,0);
+		classDef.addProperty(window.Properties.propertyNameGenerator(),1,1,2,0,0,0,0,0,0);
 		editor.getDoc().setValue(classDef.toString());
 	}
 	catch(err) {
@@ -34,7 +34,7 @@ var addPositiveInteger = function() {
 var addTunableNumeric = function() {
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,0,0,0,0,0,0);
+		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,0,0,0,0,0,0,0,0);
 		editor.getDoc().setValue(classDef.toString());
 	}
 	catch(err) {
@@ -45,7 +45,7 @@ var addTunableNumeric = function() {
 var addPrivateProperty = function() {
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,0,0,1,1,0,0);
+		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,0,0,1,1,0,0,0,0);
 		editor.getDoc().setValue(classDef.toString());
 	}
 	catch(err) {
@@ -56,7 +56,7 @@ var addPrivateProperty = function() {
 var addProtectedProperty = function() {
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,0,0,2,2,0,0);
+		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,0,0,2,2,0,0,0,0);
 		editor.getDoc().setValue(classDef.toString());
 	}
 	catch(err) {
@@ -144,4 +144,43 @@ var insertCustomProperty = function() {
 	var hidden = $("#HiddenCheckbox").is(":checked") ? 1 : 0;
 	var constant = $("#ConstantCheckbox").is(":checked") ? 1 : 0;
 	var dependent = $("#DependentCheckbox").is(":checked") ? 1 : 0;
+	var logical = $("#LogicalCheckbox").is(":checked") ? 1 : 0;
+	var nontunable = $("#NontunableCheckbox").is(":checked") ? 1 : 0;
+	var discreteState = $("#DiscreteStateCheckbox").is(":checked") ? 1 : 0;
+	var positiveInteger = $("#PositiveIntegerCheckbox").is(":checked") ? 2 : 0;
+	
+	var getAccess = Properties.constants.accessSpecifierReverseEnum[$("#SetAccessSelection").val()];
+	var setAccess = Properties.constants.accessSpecifierReverseEnum[$("#GetAccessSelection").val()];
+
+	try {
+    	classDef = this.parse();
+		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,nontunable,logical || positiveInteger
+							,getAccess,setAccess,constant,hidden,discreteState,dependent);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+
+}
+
+var clearCustomPropertiesModal = function() {
+	$("#HiddenCheckbox").prop('checked', false);
+	$("#ConstantCheckbox").prop('checked', false);
+	$("#DependentCheckbox").prop('checked', false);
+	$("#LogicalCheckbox").prop('checked', false);
+	$("#NontunableCheckbox").prop('checked', false);
+	$("#DiscreteStateCheckbox").prop('checked', false);
+	$("#PositiveIntegerCheckbox").prop('checked', false);
+
+	$("#HiddenCheckbox").prop('disabled', false);
+	$("#ConstantCheckbox").prop('disabled', false);
+	$("#DependentCheckbox").prop('disabled', false);
+	$("#LogicalCheckbox").prop('disabled', false);
+	$("#NontunableCheckbox").prop('disabled', false);
+	$("#DiscreteStateCheckbox").prop('disabled', false);
+	$("#PositiveIntegerCheckbox").prop('disabled', false);
+
+	$("#SetAccessSelection").val('public');
+	$("#GetAccessSelection").val('public');
 }

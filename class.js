@@ -20,8 +20,8 @@ function ClassDef(name, extendsSystem) {
 		codeBlock += '\n' + 'end';
 		return codeBlock;
 	}
-	this.addProperty = function(name, value, isTunable, type, getAccess, setAccess, isConstant, isHidden){
-		var property = new Property(name, value, isTunable, type, getAccess, setAccess, isConstant, isHidden);
+	this.addProperty = function(name, value, isTunable, type, getAccess, setAccess, isConstant, isHidden, isDiscreteState, isDependent){
+		var property = new Property(name, value, isTunable, type, getAccess, setAccess, isConstant, isHidden, isDiscreteState, isDependent);
 		var propertyGroupIdentifier = property.groupIdentifier();
 		if(typeof this.propertyGroups[propertyGroupIdentifier] === 'undefined')
 			this.propertyGroups[propertyGroupIdentifier] = [];
