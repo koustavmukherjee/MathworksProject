@@ -51,6 +51,7 @@
                   <li style="text-align: center;">CUSTOM</li>
                   <li role="separator" class="divider"></li>
                   <li><a href="#">Custom Property...</a></li>
+                  <li><a onclick="parse()">Parse</a></li>
                 </ul>
             </div>
           </div>
@@ -67,18 +68,20 @@
       </div>
     </div>
   </div>
-
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.min.js"></script>
   <script src="lib/codemirror.js"></script>
   <script src="lib/octave.js"></script>
-  
   <script src="editor/properties/properties.js"></script>
   <script src="editor/properties/constants.js"></script>
   <script src="editor/properties/property.js"></script>
   <script src="class.js"></script>
+  <script src="keywords.js"></script>
+  <script src="token-types.js"></script>
+  <script src="token.js"></script>
+  <script src="lexer.js"></script>
+  <script src="parser.js"></script>
   <script src="editor/editor.js"></script>
   <script src="app.js"></script>
-  
 </body>
 </html>

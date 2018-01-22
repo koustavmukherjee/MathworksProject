@@ -13,6 +13,7 @@ Keywords = (function() {
 		'Access': 11,
 		'GetAccess': 12,
 		'SetAccess': 13,
-		'end': 14
+		'end': 14,
+		'classdef': 15
 	}
 })();

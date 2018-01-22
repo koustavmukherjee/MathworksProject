@@ -5,7 +5,9 @@ function PropertyHeader(isTunable, type, getAccess, setAccess, isConstant, isHid
 	this.isTunable = isTunable || 0;
 	this.isConstant = isConstant || 0;
 	this.isHidden = isHidden || 0;
-	this.groupIdentifier = '' + this.setAccess + this.getAccess + this.isTunable + this.type + this.isConstant + this.isHidden;
+	this.groupIdentifier = function() {
+		return '' + this.setAccess + this.getAccess + this.isTunable + this.type + this.isConstant + this.isHidden;
+	}
 }
 
 //Property inherits from Property Header

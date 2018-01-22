@@ -1,37 +1,69 @@
 Parser = (function(input) {
-	var lookAheadToken = ''; //looking ahead 1 character at a time
-	var lexer = window.Lexer(input);
+	var lookAheadToken; //looking ahead 1 character at a time
+	var lexer;
 	return {
-		parse: function() {
+		parse: function(input) {
+			lexer = Lexer;
+			lexer.initialize(input);
 			lookAheadToken = lexer.nextToken();
+			return this.parseClassDef();
 		},
 		parseClassDef: function() {
-
-		},
-		parseProperties: function() {
-			consume('properties');
-			propertyHeader = new PropertyHeader();
-			if(lookAheadToken.type === TokenTypes.NEW_LINE) {
-				/*
-				propertyHeader.type = 0;
-				propertyHeader.getAccess = 0;
-				propertyHeader.setAccess = 0;
-				propertyHeader.isTunable = 0;
-				propertyHeader.isConstant = 0;
-				propertyHeader.isHidden = 0;
-				*/
-				processProperties();
+			this.match('classdef');
+			var classDef = new ClassDef();
+			var propertyGroups = {};
+			if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+				var className = lookAheadToken.value;
+				this.match(className);
+				classDef.name = className;
+				if(lookAheadToken.type === TokenTypes.LESS_THAN) {
+					this.match('<');
+					var classExtends = lookAheadToken.value;
+					if(lookAheadToken.type !== TokenTypes.IDENTIFIER)
+						throw new Error("Parser: Syntax error detected while parsing class def. Expected extends matlab system identifier but received " + lookAheadToken.value);
+					else {
+						classDef.extendsSystem = classExtends;
+						this.match(classExtends)
+					}
+				}
+				while(lookAheadToken.value !== 'end') {
+					if(lookAheadToken.value === 'properties') {
+						this.parseProperties(propertyGroups);
+						classDef.propertyGroups = propertyGroups;
+					}
+					else if(lookAheadToken.type === TokenTypes.NEW_LINE) {
+						this.match('\n');
+					}
+				}
+				this.match('end');
+				return classDef;
 			}
 			else {
-				parsePropertyHeader(propertyHeader);
+				throw new Error("Parser: Syntax error detected while parsing class def. Expected class name identifier but received " + lookAheadToken.value);
 			}
-			consume('end');
-			return propertyHeader;
+		},
+		parseProperties: function(propertyGroups) {
+			this.match('properties');
+			var propertyHeader = new PropertyHeader();
+			properties = [];
+			if(lookAheadToken.type === TokenTypes.NEW_LINE) {
+				properties = processProperties(propertyHeader);
+			}
+			else {
+				this.parsePropertyHeader(propertyHeader);
+				properties = this.processProperties(propertyHeader);
+			}
+			this.match('end');
+			if(typeof propertyGroups[propertyHeader.groupIdentifier()] === 'undefined')
+				propertyGroups[propertyHeader.groupIdentifier()] = properties;
+			else {
+				propertyGroups[propertyHeader.groupIdentifier()].concat(properties);
+			}
 		},
 		parsePropertyHeader: function(propertyHeader) {
 			this.match('(');
 			this.processPropertyHeaderTerms(propertyHeader);
-			while(lookAhead.type === TokenTypes.COMMA) {
+			while(lookAheadToken.type === TokenTypes.COMMA) {
 				this.match(',');
 				this.processPropertyHeaderTerms(propertyHeader);
 			}
@@ -76,29 +108,65 @@ Parser = (function(input) {
 		parsePropertyHeaderTerm: function(propertyHeader) {
 			if(typeof Properties.constants.propertyTunableReverseEnum[lookAheadToken.value] !== 'undefined') {
 				propertyHeader.isTunable = Properties.constants.propertyTunableReverseEnum[lookAheadToken.value];
+				this.consume(lookAheadToken.value);
 			}
 			else if(typeof Properties.constants.propertyTypeReverseEnum[lookAheadToken.value] !== 'undefined') {
 				propertyHeader.type = Properties.constants.propertyTypeReverseEnum[lookAheadToken.value];
+				this.consume(lookAheadToken.value);
 			}
 			else if(typeof Properties.constants.constantReverseEnum[lookAheadToken.value] !== 'undefined') {
 				propertyHeader.isConstant = Properties.constants.constantReverseEnum[lookAheadToken.value];
+				this.consume(lookAheadToken.value);
 			}
 			else if(typeof Properties.constants.hiddenReverseEnum[lookAheadToken.value] !== 'undefined') {
 				propertyHeader.isHidden = Properties.constants.hiddenReverseEnum[lookAheadToken.value];
+				this.consume(lookAheadToken.value);
 			}
 			else {
 				throw new Error("Parser: Syntax error detected at parse property header. Unexpected Keyword encountered " + lookAheadToken.value);
 			}
 		},
-		parseProperty: function() {
-
+		processProperties: function(propertyHeader) {
+			var properties = [];
+			this.match('\n');
+			var property = this.parseProperty(propertyHeader);
+			properties.push(property);
+			while(lookAheadToken.type === TokenTypes.NEW_LINE) {
+				this.match('\n');
+				if(lookAheadToken.value !== 'end') {
+					property = this.parseProperty(propertyHeader);
+					properties.push(property);
+				}
+			}
+			return properties;
 		},
-		lookAhead: function() {
-
+		parseProperty: function(propertyHeader) {
+			var property = new Property();
+			if(lookAheadToken.type !== TokenTypes.IDENTIFIER) {
+				throw new Error("Parser: Syntax error detected at parse property. Expected identifier but encountered " + lookAheadToken.value);
+			}
+			else {
+				var propertyName = lookAheadToken.value;
+				property.name = propertyName;
+				this.match(propertyName);
+				if(lookAheadToken.type === TokenTypes.EQUALS) {
+					match('=');
+					var propertyValue = lookAheadToken.value;
+					property.value = propertyValue;
+					match(propertyValue);
+				}
+				property.type = propertyHeader.type;
+				property.getAccess = propertyHeader.getAccess;
+				property.setAccess = propertyHeader.setAccess;
+				property.isTunable = propertyHeader.isTunable;
+				property.isConstant = propertyHeader.isConstant;
+				property.isHidden = propertyHeader.isHidden;
+				return property;
+			}
 		},
 		match: function(toMatchSymbol) {
 			if (lookAheadToken.value === toMatchSymbol) {
-				consume();
+				this.consume();
 			} else {
 				throw new Error("Parser: Syntax error detected at match. Expected "	+ toMatchSymbol + " but got " + lookAheadToken.value);
 			}
@@ -107,7 +175,7 @@ Parser = (function(input) {
 			this.loadNextToken();
 		},
 		loadNextToken: function() {
-			if(!isEndOfInput())
+			if(!this.isEndOfInput())
 				lookAheadToken = lexer.nextToken();
 		},
 		isEndOfInput: function() {
