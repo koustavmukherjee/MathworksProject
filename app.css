@@ -4,3 +4,9 @@
 .dropdown-menu li a {
 	cursor: pointer;	
 }
+#table td:nth-child(2) {
+	text-align: center;
+}
+#table td {
+	padding: 0px;
+}

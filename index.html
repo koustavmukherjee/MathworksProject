@@ -38,7 +38,7 @@
                   <li role="separator" class="divider"></li>
                   <li><a onclick="addNumericProperty()">Numeric</a></li>
                   <li><a onclick="addLogicalProperty()">Logical</a></li>
-                  <li><a href="#">String Set...</a></li>
+                  <li><a data-toggle="modal" data-target="#stringSetModal" data-backdrop="static" data-keyboard="false">String Set...</a></li>
                   <li><a onclick="addPositiveInteger()">Positive Integer</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a onclick="addTunableNumeric()">Tunable Numeric</a></li>
@@ -50,7 +50,7 @@
                   <li role="separator" class="divider"></li>
                   <li style="text-align: center;">CUSTOM</li>
                   <li role="separator" class="divider"></li>
-                  <li><a data-toggle="modal" data-target="#myModal" onclick="clearCustomPropertiesModal()">Custom Property...</a></li>
+                  <li><a data-toggle="modal" data-target="#myModal" onclick="clearCustomPropertiesModal()" data-backdrop="static" data-keyboard="false">Custom Property...</a></li>
                 </ul>
             </div>
           </div>
@@ -125,6 +125,70 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal" onclick="insertCustomProperty()">Insert</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="stringSetModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">String Set</h4>
+            </div>
+            <div class="modal-body">
+              <table style="width: 100%;">
+                <tr>
+                  <td style="width: 10%">
+                    Name:
+                  </td>
+                  <td style="width: 90%">
+                    <div contenteditable="true" style="border: 1px solid black; width: 100%;">Color</div>
+                  </td>
+                </tr>
+              </table>
+              <div style="margin-top: 20px;">
+                <button type="button" class="btn btn-default" onclick="removeRowFromTable()"><span class="glyphicon glyphicon-minus"></span></button>
+                <button type="button" class="btn btn-default" onclick="addRowToTable()"><span class="glyphicon glyphicon-plus"></span></button>
+              </div>
+              <table id="table" class="table table-bordered" style="margin-top: 10px;">
+                <thead>
+                  <tr>
+                      <th data-field="name" style="width:90%; text-align: center;" >Value</th>
+                      <th data-field="state" data-radio="true" style="width:10%; text-align: center;">Default</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                        <div contenteditable="true">red</div>
+                    </td>
+                    <td><input type="radio" name="radioGroup"></td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div contenteditable="true">green</div>
+                      </td>
+                      <td><input type="radio" name="radioGroup" checked></td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div contenteditable="true">blue</div>
+                      </td>
+                      <td><input type="radio" name="radioGroup"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" onclick="insertStringSet()">Insert</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>

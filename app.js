@@ -184,3 +184,19 @@ var clearCustomPropertiesModal = function() {
 	$("#SetAccessSelection").val('public');
 	$("#GetAccessSelection").val('public');
 }
+
+var addRowToTable = function() {
+	$('#table tr:last').after('<tr><td><div contenteditable="true"></div></td><td><input type="radio" name="radioGroup"></td></tr>');
+}
+
+var removeRowFromTable = function() {
+	$('#table tr:last').remove();
+}
+
+var insertStringSet = function() {
+	$('#table tbody tr td:nth-child(1) div').each(function() {
+	   console.log( $(this).text() );
+	});
+	var selectedIndex = $('[name="radioGroup"]:checked').parents('tr').index();
+	console.log(selectedIndex);
+}
