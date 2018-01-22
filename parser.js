@@ -47,7 +47,7 @@ Parser = (function(input) {
 			var propertyHeader = new PropertyHeader();
 			properties = [];
 			if(lookAheadToken.type === TokenTypes.NEW_LINE) {
-				properties = processProperties(propertyHeader);
+				properties = this.processProperties(propertyHeader);
 			}
 			else {
 				this.parsePropertyHeader(propertyHeader);
@@ -85,19 +85,19 @@ Parser = (function(input) {
 			this.match(lhs);
 			this.match('=');
 			var rhs = lookAheadToken.value;
-			if(typeof Properties.constants.accessSpecifierReverseEnum[rhs.value] === 'undefined') {
+			if(typeof Properties.constants.accessSpecifierReverseEnum[rhs] === 'undefined') {
 				throw new Error("Parser: Syntax error detected at parse property header. Expected valid access specifier but encountered " + rhs.value);
 			}
 			else {
-				if(lhs.value === 'Access') {
-					propertyHeader.getAccess = Properties.constants.accessSpecifierReverseEnum[rhs.value];
-					propertyHeader.setAccess = Properties.constants.accessSpecifierReverseEnum[rhs.value];
+				if(lhs === 'Access') {
+					propertyHeader.getAccess = Properties.constants.accessSpecifierReverseEnum[rhs];
+					propertyHeader.setAccess = Properties.constants.accessSpecifierReverseEnum[rhs];
 				}
-				else if(lhs.value === 'GetAccess') {
-					propertyHeader.getAccess = Properties.constants.accessSpecifierReverseEnum[rhs.value];
+				else if(lhs === 'GetAccess') {
+					propertyHeader.getAccess = Properties.constants.accessSpecifierReverseEnum[rhs];
 				}
-				else if(lhs.value === 'SetAccess') {
-					propertyHeader.setAccess = Properties.constants.accessSpecifierReverseEnum[rhs.value];
+				else if(lhs === 'SetAccess') {
+					propertyHeader.setAccess = Properties.constants.accessSpecifierReverseEnum[rhs];
 				}
 				else {
 					throw new Error("Parser: Syntax error detected at parse property header. Expected valid access restrictor but encountered " + lhs.value);
@@ -150,10 +150,10 @@ Parser = (function(input) {
 				property.name = propertyName;
 				this.match(propertyName);
 				if(lookAheadToken.type === TokenTypes.EQUALS) {
-					match('=');
+					this.match('=');
 					var propertyValue = lookAheadToken.value;
 					property.value = propertyValue;
-					match(propertyValue);
+					this.match(propertyValue);
 				}
 				property.type = propertyHeader.type;
 				property.getAccess = propertyHeader.getAccess;

@@ -16,14 +16,14 @@ Properties = (function(){
 			
 			if(propertyGroupIdentifier[0] === propertyGroupIdentifier[1]) {
 				if(propertyGroupIdentifier[0] !== '0')
-					propertyHeader += 'Access = '+ accessSpecifierEnum(propertyGroupIdentifier[0]);
+					propertyHeader += 'Access = '+ Properties.constants.accessSpecifierEnum[propertyGroupIdentifier[0]];
 			}
 
 			else {
 				if(propertyGroupIdentifier[0] !== '0')
-					propertyHeader += 'SetAccess = '+ accessSpecifierEnum(propertyGroupIdentifier[0]);
+					propertyHeader += 'SetAccess = '+ Properties.constants.accessSpecifierEnum[propertyGroupIdentifier[0]];
 				if(propertyGroupIdentifier[1] !== '0')
-					propertyHeader += 'GetAccess = '+ accessSpecifierEnum(propertyGroupIdentifier[1]);
+					propertyHeader += 'GetAccess = '+ Properties.constants.accessSpecifierEnum[propertyGroupIdentifier[1]];
 			}
 
 			for(var i = 2; i < propertyGroupIdentifier.length; i++) {
