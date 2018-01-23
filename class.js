@@ -11,8 +11,19 @@ function ClassDef(name, extendsSystem) {
 			codeBlock += '\n\t'+ window.Properties.getPropertyGroupHeader(propertyGroup);
 			for(var i = 0; i < properties.length; i++) {
 				codeBlock += '\n\t\t' + properties[i].name;
-				if(typeof properties[i].value !== 'undefined' && properties[i].value !== '') {
-					codeBlock += ' = ' + properties[i].value;
+				if(properties[i].type === Properties.constants.propertyTypeReverseEnum['StringSet']) {
+					codeBlock += ' = matlab.system.StringSet({';
+					for(var j = 0; j < properties[i].value.length; j++) {
+						codeBlock += '\'' + properties[i].value[j] + '\'';
+						if(j !== properties[i].value.length - 1)
+							codeBlock += ','
+					}
+					codeBlock += '})';
+				}
+				else {
+					if(typeof properties[i].value !== 'undefined' && properties[i].value !== '') {
+						codeBlock += ' = ' + properties[i].value;
+					}
 				}
 			}
 			codeBlock += '\n\tend';

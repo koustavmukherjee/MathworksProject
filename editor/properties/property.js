@@ -8,7 +8,9 @@ function PropertyHeader(isTunable, type, getAccess, setAccess, isConstant, isHid
 	this.isDiscreteState = isDiscreteState || 0;
 	this.isDependent = isDependent || 0;
 	this.groupIdentifier = function() {
-		return '' + this.setAccess + this.getAccess + this.isTunable + this.type + this.isConstant + this.isHidden + this.isDiscreteState + this.isDependent;
+		return '' + this.setAccess + this.getAccess + this.isTunable + 
+		(this.type == Properties.constants.propertyTypeReverseEnum['StringSet'] ? '0' : this.type) 
+		+ this.isConstant + this.isHidden + this.isDiscreteState + this.isDependent;
 	}
 }
 

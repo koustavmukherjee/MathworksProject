@@ -1,3 +1,4 @@
+$("#compile-failure").hide();
 var editor = CodeMirror.fromTextArea(document.getElementById("code"),
 {
     mode: {name: "octave",

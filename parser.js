@@ -159,11 +159,36 @@ Parser = (function(input) {
 				this.match(propertyName);
 				if(lookAheadToken.type === TokenTypes.EQUALS) {
 					this.match('=');
-					var propertyValue = lookAheadToken.value;
-					property.value = propertyValue;
-					this.match(propertyValue);
+					if(lookAheadToken.value === 'matlab.system.StringSet') {
+						this.match('matlab.system.StringSet');
+						this.match('(');
+						this.match('{');
+						this.match('\'');
+						var propertyValues = [];
+						if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+							propertyValues.push(lookAheadToken.value);
+							this.match(lookAheadToken.value)
+							this.match('\'');
+							while(lookAheadToken.type === TokenTypes.COMMA) {
+								this.match(',');
+								this.match('\'');
+								propertyValues.push(lookAheadToken.value);
+								this.match(lookAheadToken.value)
+								this.match('\'');
+							}
+						}
+						this.match('}');
+						this.match(')');
+						property.value = propertyValues;
+						property.type = Properties.constants.propertyTypeReverseEnum['StringSet'];
+					}
+					else {
+						var propertyValue = lookAheadToken.value;
+						property.value = propertyValue;
+						this.match(propertyValue);
+						property.type = propertyHeader.type;
+					}
 				}
-				property.type = propertyHeader.type;
 				property.getAccess = propertyHeader.getAccess;
 				property.setAccess = propertyHeader.setAccess;
 				property.isTunable = propertyHeader.isTunable;
@@ -178,7 +203,11 @@ Parser = (function(input) {
 			if (lookAheadToken.value === toMatchSymbol) {
 				this.consume();
 			} else {
-				throw new Error("Parser: Syntax error detected at match. Expected "	+ toMatchSymbol + " but got " + lookAheadToken.value);
+				$("#compile-failure-message").html("Syntax Error :  Expected "	+ toMatchSymbol + " but got " + lookAheadToken.value + ' at line : ' + lexer.getLineNumber() + ':' + lexer.getCharNumber());
+				$("#compile-failure").fadeTo(3000, 500).slideUp(500, function(){
+               		$("#compile-failure").slideUp(500);
+                });
+				throw new Error("Parser: Syntax error detected at match. Expected "	+ toMatchSymbol + " but got " + lookAheadToken.value + ' at ' + lexer.getLineNumber() + ':' + lexer.getCharNumber());
 			}
 		},
 		consume: function() {

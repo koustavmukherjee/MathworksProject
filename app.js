@@ -154,7 +154,8 @@ var insertCustomProperty = function() {
 
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),undefined,nontunable,logical || positiveInteger
+    	var propertyName = discreteState ? window.Properties.stateNameGenerator() : window.Properties.propertyNameGenerator();
+		classDef.addProperty(propertyName,undefined,nontunable,logical || positiveInteger
 							,getAccess,setAccess,constant,hidden,discreteState,dependent);
 		editor.getDoc().setValue(classDef.toString());
 	}
@@ -194,9 +195,25 @@ var removeRowFromTable = function() {
 }
 
 var insertStringSet = function() {
+	var values = [];
 	$('#table tbody tr td:nth-child(1) div').each(function() {
-	   console.log( $(this).text() );
+	   values.push($(this).text());
 	});
 	var selectedIndex = $('[name="radioGroup"]:checked').parents('tr').index();
-	console.log(selectedIndex);
+	var value;
+	if(selectedIndex !== -1) {
+		value = values[selectedIndex];
+	}
+	var name = $('#stringSetName').html();
+	if(name.trim() !== '') {
+		try {
+	    	classDef = this.parse();
+			classDef.addProperty(name,value,1,0,0,0,0,0,0,0);
+			classDef.addProperty(name + 'Set',values,0,3,0,0,1,1,0,0);
+			editor.getDoc().setValue(classDef.toString());
+		}
+		catch(err) {
+	    	console.error(err);
+		}
+	}	
 }

@@ -13,12 +13,14 @@ Properties.constants = (function() {
 		propertyTypeEnum: {
 			0: '', //NUMERIC
 			1: 'Logical',
-			2: 'PositiveInteger'
+			2: 'PositiveInteger',
+			3: 'StringSet'
 		},
 
 		propertyTypeReverseEnum: {
 			'Logical': 1,
-			'PositiveInteger': 2
+			'PositiveInteger': 2,
+			'StringSet' : 3
 		},
 
 		accessSpecifierEnum: {

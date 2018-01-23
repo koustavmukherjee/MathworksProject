@@ -12,6 +12,8 @@ TokenTypes = (function() {
 		IDENTIFIER: 10,
 		LESS_THAN: 11,
 		QUOTE: 12,
+		LCURLBRAC: 13,
+		RCURLBRAC: 14,
 		EOI: 20
 	}
 })();

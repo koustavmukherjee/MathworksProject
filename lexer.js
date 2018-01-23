@@ -1,5 +1,6 @@
 Lexer = (function() {
-	var lineNumber = 0;
+	var lineNumber = 1;
+	var charNumber = 1;
 	var curCharacterPosition = 0;
 	var lookAheadCharacter = ''; //looking ahead 1 character at a time
 	var input = '';
@@ -7,6 +8,8 @@ Lexer = (function() {
 		initialize: function(inp) {
 			input = inp;
 			curCharacterPosition = 0;
+			lineNumber = 1;
+			charNumber = 1;
 			if(!this.isEndOfInput()) {
 				lookAheadCharacter = inp[curCharacterPosition];
 			}
@@ -20,11 +23,15 @@ Lexer = (function() {
 		getLineNumber: function() {
 			return lineNumber;
 		},
+		getCharNumber: function() {
+			return charNumber;
+		},
 		getCurrentInputPosition: function() {
 			return curCharacterPosition;
 		},
 		consume: function() {
 			curCharacterPosition++;
+			charNumber++;
 			if(!this.isEndOfInput()) {
 				lookAheadCharacter = input.charAt(curCharacterPosition);
 			}
@@ -63,6 +70,8 @@ Lexer = (function() {
 				return new Token(window.TokenTypes.EQUALS, '=', startPosition);
 			}
 			else if(this.lookAhead() === '\n') {
+				lineNumber++;
+				charNumber = 0;
 				this.consume();
 				return new Token(window.TokenTypes.NEW_LINE, '\n', startPosition);	
 			}
@@ -70,8 +79,15 @@ Lexer = (function() {
 				this.consume();
 				return new Token(window.TokenTypes.LESS_THAN, '<', startPosition);	
 			}
+			else if(this.lookAhead() === '{') {
+				this.consume();
+				return new Token(window.TokenTypes.LCURLBRAC, '{', startPosition);	
+			}
+			else if(this.lookAhead() === '}') {
+				this.consume();
+				return new Token(window.TokenTypes.RCURLBRAC, '}', startPosition);	
+			}
 			else if(this.lookAhead() === '\'') {
-				lineNumber++;
 				this.consume();
 				return new Token(window.TokenTypes.QUOTE, '\'', startPosition);	
 			}

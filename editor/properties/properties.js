@@ -8,6 +8,14 @@ Properties = (function(){
 		    	return 'Property' + counter;
 		    }
 		})(),
+		
+		stateNameGenerator: (function () {
+		    var counter = 0;
+		    return function () {
+		    	counter += 1;
+		    	return 'State' + counter;
+		    }
+		})(),
 
 		getPropertyGroupHeader: function(propertyGroupIdentifier) {
 			var propertyHeader = 'properties';
@@ -32,7 +40,7 @@ Properties = (function(){
 				switch(i) {
 					case 2: 	propertyArgument = Properties.constants.propertyTunableEnum[ch];
 								break;
-					case 3: 	propertyArgument = Properties.constants.propertyTypeEnum[ch];
+					case 3: 	ch == Properties.constants.propertyTypeReverseEnum['StringSet'] ? propertyArgument = '' : propertyArgument = Properties.constants.propertyTypeEnum[ch];
 								break;
 					case 4: 	propertyArgument = Properties.constants.constantEnum[ch];
 								break;

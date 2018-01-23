@@ -59,8 +59,12 @@
         </div>
       </div>
       <div>
-        
-        <textarea id="code" name="code">
+        <div class="alert alert-danger" id="compile-failure" style="display:none;">
+          <button type="button" class="close" data-dismiss="alert">x</button>
+          <strong>Parse Error! </strong>
+          <div id="compile-failure-message"></div>
+        </div>
+        <textarea id="code" name="code" style="display:none;">
           
         </textarea>
         
@@ -149,7 +153,7 @@
                     Name:
                   </td>
                   <td style="width: 90%">
-                    <div contenteditable="true" style="border: 1px solid black; width: 100%;">Color</div>
+                    <div contenteditable="true" style="border: 1px solid black; width: 100%;" id="stringSetName">Color</div>
                   </td>
                 </tr>
               </table>
@@ -188,7 +192,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" onclick="insertStringSet()">Insert</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="insertStringSet()">Insert</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
