@@ -10,3 +10,9 @@
 #table td {
 	padding: 0px;
 }
+html {
+	overflow: hidden;
+}
+.CodeMirror {
+	height: calc(100vh - 150px);
+}
