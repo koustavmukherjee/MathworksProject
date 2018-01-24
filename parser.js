@@ -204,7 +204,7 @@ Parser = (function(input) {
 				this.consume();
 			} else {
 				$("#compile-failure-message").html("Syntax Error :  Expected "	+ toMatchSymbol + " but got " + lookAheadToken.value + ' at line : ' + lexer.getLineNumber() + ':' + lexer.getCharNumber());
-				$("#compile-failure").fadeTo(3000, 500).slideUp(500, function(){
+				$("#compile-failure").fadeTo(5000, 500).slideUp(500, function(){
                		$("#compile-failure").slideUp(500);
                 });
 				throw new Error("Parser: Syntax error detected at match. Expected "	+ toMatchSymbol + " but got " + lookAheadToken.value + ' at ' + lexer.getLineNumber() + ':' + lexer.getCharNumber());
