@@ -14,7 +14,7 @@
   <nav class="navbar navbar-default">
     <div class="container-fluid">
         <ul class="nav nav-tabs">
-            <li><a data-toggle="tab" href="">Home</a></li>
+            <li><a data-toggle="tab" href="" disabled>Home</a></li>
             <li><a data-toggle="tab" href="">Plots</a></li>
             <li><a data-toggle="tab" href="">Apps</a></li>
             <li class="active" href="#!/editor"><a data-toggle="tab" href="#">Editor</a></li>
@@ -27,14 +27,14 @@
   <div>
     <div class="container-fluid">
       <div class="row" style="background-color: #f8f8f8;margin-bottom: 20px;">
-        <div class="col-sm-2">
-          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="col-sm-1">
+          <!--<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">-->
             <div class="btn-group-vertical">
-              <button type="button" class="btn btn-primary">P</button>
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;">
+              <button type="button" class="property-btn btn btn-primary" style="height: 30px!important">P</button>
+              <button type="button" class="property-btn btn btn-primary dropdown-toggle" data-toggle="dropdown" style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;">
                 Insert Property <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
-                  <li style="text-align: center;">PUBLIC</li>
+                  <li style="text-align: center;" class="menu-headings">PUBLIC</li>
                   <li role="separator" class="divider"></li>
                   <li><a onclick="addNumericProperty()">Numeric</a></li>
                   <li><a onclick="addLogicalProperty()">Logical</a></li>
@@ -43,19 +43,35 @@
                   <li role="separator" class="divider"></li>
                   <li><a onclick="addTunableNumeric()">Tunable Numeric</a></li>
                   <li role="separator" class="divider"></li>
-                  <li style="text-align: center;">RESTRICTED</li>
+                  <li style="text-align: center;" class="menu-headings">RESTRICTED</li>
                   <li role="separator" class="divider"></li>
                   <li><a onclick="addPrivateProperty()">Private</a></li>
                   <li><a onclick="addProtectedProperty()">Protected</a></li>
                   <li role="separator" class="divider"></li>
-                  <li style="text-align: center;">CUSTOM</li>
+                  <li style="text-align: center;" class="menu-headings">CUSTOM</li>
                   <li role="separator" class="divider"></li>
                   <li><a data-toggle="modal" data-target="#myModal" onclick="clearCustomPropertiesModal()" data-backdrop="static" data-keyboard="false">Custom Property...</a></li>
                 </ul>
             </div>
-          </div>
+          <!--</div>-->
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-1">
+          <div class="btn-group-vertical">
+              <button type="button" class="method-btn btn btn-primary dropdown-toggle" data-toggle="dropdown" style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;">
+                M <br/> Insert Method <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li style="text-align: center;" class="menu-headings">CONSTRUCTOR</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a onclick="constructorMethod()">Set properties from name-value pairs</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li style="text-align: center;" class="menu-headings">ALGORITHM</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a onclick="implementAlgorithm()">Implement Algorithm</a></li>
+                  <li><a onclick="performOneTimeCalculation()">Perform One Time Calculation</a></li>
+                  <li><a onclick="performOneTimeCalculation()">Initialize / Reset States</a></li>
+                  <li><a onclick="performOneTimeCalculation()">Release Resource</a></li>
+                </ul>
+            </div>
         </div>
       </div>
       <div>

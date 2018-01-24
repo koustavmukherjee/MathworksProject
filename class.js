@@ -28,6 +28,12 @@ function ClassDef(name, extendsSystem) {
 			}
 			codeBlock += '\n\tend';
 		}
+		if(typeof this.methods !== 'undefined' && Array.isArray(this.methods)) {
+			for(var i = 0; i < this.methods.length; i++) {
+				codeBlock += '\n';
+				codeBlock += this.methods[i].toString();
+			}
+		}
 		codeBlock += '\n' + 'end';
 		return codeBlock;
 	}
