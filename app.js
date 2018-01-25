@@ -281,3 +281,118 @@ var releaseResource = function() {
     	console.error(err);
 	}
 }
+
+var validateRelatedPropertyValues = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('validatePropertiesImpl', ['obj'], '\t\t\t% Validate related or interdependent property values',
+								[], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var performCalculationsIfTunableChanges = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('processTunedPropertiesImpl', ['obj'], '\t\t\t% Perform calculations if tunable properties change while\n\t\t\t% system is running',
+								[], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var setPropertyVisibility = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('isInactivePropertyImpl', ['obj','prop'], '\t\t\t% Return false if property is visible based on object\n\t\t\t% configuration, for the command line and System block dialog\n\t\t\tflag = false;',
+								['flag'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var specifyStateValues = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('getDiscreteStateImpl', ['obj'], '\t\t\t% Return structure of properties with DiscreteState attribute\n\t\t\tds = struct([]);',
+								['ds'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var validateInputs = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('validateInputsImpl', ['obj','u'], '\t\t\t% Validate inputs to the step method at initialization',
+								[], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var lockInputSize = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('isInputSizeLockedImpl', ['obj','index'], '\t\t\t% Return true if input size is not allowed to change while\n\t\t\t% system is running\n\t\t\tflag = true;',
+								['flag'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var specifyNumberOfInputs = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('getNumInputsImpl', ['obj'],
+    		'\t\t\t% Define total number of inputs for system with optional inputs'+
+    		'\n\t\t\tnum = 1;'+
+            '\n\t\t\t% if obj.UseOptionalInput'+
+            '\n\t\t\t%     num = 2;'+
+            '\n\t\t\t% end',
+			['num'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var specifyNumberOfOutputs = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('getNumOutputsImpl', ['obj'],
+    		'\t\t\t% Define total number of outputs for system with optional'+
+    		'\n\t\t\t% outputs'+
+            '\n\t\t\tnum = 1;'+
+            '\n\t\t\t% if obj.UseOptionalOutput'+
+            '\n\t\t\t%     num = 2;'+
+            '\n\t\t\t% end',
+			['num'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}

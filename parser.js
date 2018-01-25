@@ -86,7 +86,7 @@ Parser = (function(input) {
 			}
 			if(typeof methodAccessType !== 'undefined' && methodAccessType !== '') {
 				if(typeof methodGroups[methodAccessType] === 'undefined')
-					methodGroups[methodAccessType] = new Method(methodAccessType, []);
+					methodGroups[methodAccessType] = new Method(methodAccessType, {});
 				while(lookAheadToken.value !== 'end') {
 					if(lookAheadToken.value === 'function') {
 						this.parseFunction(methodGroups[methodAccessType]);

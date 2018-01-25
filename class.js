@@ -47,7 +47,7 @@ function ClassDef(name, extendsSystem) {
 	}
 	this.addFunction = function(accessType, fn) {
 		if(typeof this.methodGroups[accessType] === 'undefined')
-			this.methodGroups[accessType] = new Method(accessType, []);
+			this.methodGroups[accessType] = new Method(accessType, {});
 		this.methodGroups[accessType].addFunction(fn);
 	}
 }
