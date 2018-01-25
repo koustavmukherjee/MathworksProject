@@ -30,7 +30,7 @@
         <div class="col-sm-1">
           <!--<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">-->
             <div class="btn-group-vertical">
-              <button type="button" class="property-btn btn btn-primary" style="height: 30px!important" onclick="addNumericProperty()">P</button>
+              <button type="button" class="property-btn btn btn-primary" style="height: 35px!important" onclick="addNumericProperty()">P</button>
               <button type="button" class="property-btn btn btn-primary dropdown-toggle" data-toggle="dropdown" style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;">
                 Insert Property <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu">
@@ -90,9 +90,29 @@
         </div>
         <div class="col-sm-1">
             <div class="btn-group-vertical">
-              <button type="button" class="property-btn btn btn-primary" style="height: 30px!important" onclick="addDiscreteStateProperty()">Insert State</button>
+              <button type="button" class="property-btn btn btn-primary" style="height: 25px!important; padding: 0px;width: 120px !important;" onclick="addDiscreteStateProperty()">Insert State</button>
             </div>
-          <!--</div>-->
+            <div class="btn-group-vertical">
+              <button type="button" class="property-btn btn btn-primary dropdown-toggle" data-toggle="dropdown" style="border-bottom-right-radius: 4px;border-bottom-left-radius: 4px;height: 25px!important;padding: 0px;width: 120px !important;margin-top: 5px;">
+                Input / Output <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li style="text-align: center;" class="menu-headings">INSERT</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a onclick="addInputToStepImpl()">Input</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a onclick="addOutputToStepImpl()">Output</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li style="text-align: center;" class="menu-headings">INSERT METHOD</li>
+                  <li role="separator" class="divider"></li>
+                  <li><a onclick="validateInputs()">Validate Inputs</a></li>
+                  <li><a onclick="lockInputSize()">Lock Input Size</a></li> 
+                  <li><a onclick="specifyNumberOfInputs()">Specify Number of Inputs</a></li>
+                  <li><a onclick="specifyNumberOfOutputs()">Specify Number of Outputs</a></li>
+                </ul>
+            </div>
+            <div class="btn-group-vertical">
+              <button type="button" class="property-btn btn btn-primary" style="height: 25px!important; padding: 0px;width: 120px !important;margin-top: 5px;" onclick="addDiscreteStateProperty()">Analyze</button>
+            </div>
         </div>
       </div>
       <div>

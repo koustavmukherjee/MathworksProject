@@ -17,6 +17,22 @@ Properties = (function(){
 		    }
 		})(),
 
+		inputParameterGenerator: (function () {
+		    var counter = 0;
+		    return function () {
+		    	counter += 1;
+		    	return 'u' + counter;
+		    }
+		})(),
+
+		outputParameterGenerator: (function () {
+		    var counter = 0;
+		    return function () {
+		    	counter += 1;
+		    	return 'y' + counter;
+		    }
+		})(),
+
 		getPropertyGroupHeader: function(propertyGroupIdentifier) {
 			var propertyHeader = 'properties';
 			if(propertyGroupIdentifier === '00000000') return propertyHeader;

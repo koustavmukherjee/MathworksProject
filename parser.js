@@ -112,9 +112,10 @@ Parser = (function(input) {
 				}
 				this.match(lookAheadToken.value);
 				while(lookAheadToken.type === TokenTypes.COMMA) {
-					match(',');
+					this.match(',');
 					if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
 						fn.outputs.push(lookAheadToken.value);
+						this.match(lookAheadToken.value);
 					}
 					else {
 						this.displayErrorMessage('valid output parameter');
@@ -123,7 +124,7 @@ Parser = (function(input) {
 				this.match(']');
 				this.match('=');
 				if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
-					fn.name(lookAheadToken.value);
+					fn.name = lookAheadToken.value;
 					this.match(lookAheadToken.value);
 				}
 				else {

@@ -407,3 +407,41 @@ var specifyNumberOfOutputs = function() {
     	console.error(err);
 	}
 }
+
+var addInputToStepImpl = function() {
+	try {
+    	if(	classDef 
+    		&& classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']]
+    		&& classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl']
+		) {
+			classDef = this.parse();
+    		classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl'].parameters.push(window.Properties.inputParameterGenerator());
+    		editor.getDoc().setValue(classDef.toString());
+		}
+		else {
+			implementAlgorithm();
+		}
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var addOutputToStepImpl = function() {
+	try {
+    	if(	classDef 
+    		&& classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']]
+    		&& classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl']
+		) {
+			classDef = this.parse();
+    		classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl'].outputs.push(window.Properties.outputParameterGenerator());
+    		editor.getDoc().setValue(classDef.toString());
+		}
+		else {
+			implementAlgorithm();
+		}
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
