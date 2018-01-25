@@ -229,3 +229,55 @@ var constructorMethod = function() {
     	console.error(err);
 	}
 }
+
+var implementAlgorithm = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('stepImpl', ['obj','u'], '\t\t\t% Implement algorithm. Calculate y as a function of input u and\n\t\t\t% discrete states.\n\t\t\ty = u;',
+								['y'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var performOneTimeCalculation = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('setupImpl', ['obj'], '\t\t\t% Perform one-time calculations, such as computing constants',
+								[], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var initializeStates = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('resetImpl', ['obj'], '\t\t\t% Initialize / reset discrete-state properties',
+								[], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var releaseResource = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn('releaseImpl', ['obj'], '\t\t\t% Release resources, such as file handles',
+								[], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['protected'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}

@@ -144,6 +144,7 @@ Parser = (function(input) {
 					this.match('=');
 					if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
 						fn.name = lookAheadToken.value;
+						this.match(lookAheadToken.value);
 					}
 					else {
 						this.displayErrorMessage('valid function name');
@@ -152,7 +153,6 @@ Parser = (function(input) {
 				else {
 					fn.name = name;
 				}
-				this.match(lookAheadToken.value);
 				this.parseFunctionparameters(fn);
 				var currentCharacterPosition = lexer.getCurrentInputPosition();
 				this.match('\n');

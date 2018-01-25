@@ -19,7 +19,7 @@ Properties = (function(){
 
 		getPropertyGroupHeader: function(propertyGroupIdentifier) {
 			var propertyHeader = 'properties';
-			if(propertyGroupIdentifier === '000000') return propertyHeader;
+			if(propertyGroupIdentifier === '00000000') return propertyHeader;
 			propertyHeader += '(';
 			
 			if(propertyGroupIdentifier[0] === propertyGroupIdentifier[1]) {
