@@ -14,6 +14,8 @@ TokenTypes = (function() {
 		QUOTE: 12,
 		LCURLBRAC: 13,
 		RCURLBRAC: 14,
+		LSQBRAC: 14,
+		RSQBRAC: 15,
 		EOI: 20
 	}
 })();

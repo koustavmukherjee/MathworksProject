@@ -14,6 +14,9 @@ Lexer = (function() {
 				lookAheadCharacter = inp[curCharacterPosition];
 			}
 		},
+		getInput: function() {
+			return input;
+		},
 		lookAhead: function() {
 			return lookAheadCharacter;
 		},
@@ -23,11 +26,18 @@ Lexer = (function() {
 		getLineNumber: function() {
 			return lineNumber;
 		},
+		setLineNumber: function(lineNo) {
+			lineNumber = lineNo;
+			charNumber = 1;
+		},
 		getCharNumber: function() {
 			return charNumber;
 		},
 		getCurrentInputPosition: function() {
 			return curCharacterPosition;
+		},
+		setCurrentInputPosition: function(position) {
+			curCharacterPosition = position;
 		},
 		consume: function() {
 			curCharacterPosition++;
@@ -71,7 +81,7 @@ Lexer = (function() {
 			}
 			else if(this.lookAhead() === '\n') {
 				lineNumber++;
-				charNumber = 0;
+				charNumber = 1;
 				this.consume();
 				return new Token(window.TokenTypes.NEW_LINE, '\n', startPosition);	
 			}
@@ -90,6 +100,14 @@ Lexer = (function() {
 			else if(this.lookAhead() === '\'') {
 				this.consume();
 				return new Token(window.TokenTypes.QUOTE, '\'', startPosition);	
+			}
+			else if(this.lookAhead() === '[') {
+				this.consume();
+				return new Token(window.TokenTypes.LSQBRAC, '[', startPosition);	
+			}
+			else if(this.lookAhead() === ']') {
+				this.consume();
+				return new Token(window.TokenTypes.RSQBRAC, ']', startPosition);	
 			}
 			else if(/\s/.test(this.lookAhead())) {
 				this.consume();

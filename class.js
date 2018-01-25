@@ -2,7 +2,7 @@ function ClassDef(name, extendsSystem) {
 	this.name = name;
 	this.extendsSystem = extendsSystem;
 	this.propertyGroups = {};
-	this.methods = [];
+	this.methodGroups = {};
 	this.toString = function(){
 		var codeBlock = 'classdef ' + this.name;
 		codeBlock += extendsSystem !== '' ? ' < ' + this.extendsSystem : '';
@@ -28,10 +28,11 @@ function ClassDef(name, extendsSystem) {
 			}
 			codeBlock += '\n\tend';
 		}
-		if(typeof this.methods !== 'undefined' && Array.isArray(this.methods)) {
-			for(var i = 0; i < this.methods.length; i++) {
+		for(var methodGroup in this.methodGroups) {
+			var method = this.methodGroups[methodGroup];
+			if(typeof method !== 'undefined') {
 				codeBlock += '\n';
-				codeBlock += this.methods[i].toString();
+				codeBlock += method.toString();
 			}
 		}
 		codeBlock += '\n' + 'end';
@@ -43,5 +44,10 @@ function ClassDef(name, extendsSystem) {
 		if(typeof this.propertyGroups[propertyGroupIdentifier] === 'undefined')
 			this.propertyGroups[propertyGroupIdentifier] = [];
 		this.propertyGroups[propertyGroupIdentifier].push(property);
+	}
+	this.addFunction = function(accessType, fn) {
+		if(typeof this.methodGroups[accessType] === 'undefined')
+			this.methodGroups[accessType] = new Method(accessType, []);
+		this.methodGroups[accessType].addFunction(fn);
 	}
 }

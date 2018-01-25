@@ -12,6 +12,8 @@ Parser = (function(input) {
 			this.match('classdef');
 			var classDef = new ClassDef();
 			var propertyGroups = {};
+			var methodGroups = {};
+			var Groups = {};
 			if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
 				var className = lookAheadToken.value;
 				this.match(className);
@@ -30,6 +32,10 @@ Parser = (function(input) {
 					if(lookAheadToken.value === 'properties') {
 						this.parseProperties(propertyGroups);
 						classDef.propertyGroups = propertyGroups;
+					}
+					else if(lookAheadToken.value === 'methods') {
+						this.parseMethods(methodGroups);
+						classDef.methodGroups = methodGroups;
 					}
 					else if(lookAheadToken.type === TokenTypes.NEW_LINE) {
 						this.match('\n');
@@ -59,6 +65,137 @@ Parser = (function(input) {
 			else {
 				propertyGroups[propertyHeader.groupIdentifier()].concat(properties);
 			}
+		},
+		parseMethods: function(methodGroups) {
+			this.match('methods');
+			var methodAccessType = '';
+			if(lookAheadToken.type === TokenTypes.NEW_LINE) {
+				methodAccessType = Properties.constants.accessSpecifierReverseEnum['public'];
+			}
+			else {
+				this.match('(');
+				this.match('Access');
+				this.match('=');
+				if(typeof Properties.constants.accessSpecifierReverseEnum[lookAheadToken.value] === 'undefined')
+					this.displayErrorMessage('valid access specifier');
+				else {
+					methodAccessType = Properties.constants.accessSpecifierReverseEnum[lookAheadToken.value];
+					this.match(lookAheadToken.value);
+					this.match(')')
+				}
+			}
+			if(typeof methodAccessType !== 'undefined' && methodAccessType !== '') {
+				if(typeof methodGroups[methodAccessType] === 'undefined')
+					methodGroups[methodAccessType] = new Method(methodAccessType, []);
+				while(lookAheadToken.value !== 'end') {
+					if(lookAheadToken.value === 'function') {
+						this.parseFunction(methodGroups[methodAccessType]);
+					}
+					else if(lookAheadToken.type === TokenTypes.NEW_LINE) {
+						this.match('\n');
+					}
+				}
+				this.match('end')
+			}
+		},
+		parseFunction: function(method) {
+			this.match('function');
+			var fn = new Fn();
+			if(lookAheadToken.type === TokenTypes.LSQBRAC) {
+				fn.outputs = [];
+				this.match('[');
+				if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+					fn.outputs.push(lookAheadToken.value);
+				}
+				else {
+					this.displayErrorMessage('valid output parameter');
+				}
+				this.match(lookAheadToken.value);
+				while(lookAheadToken.type === TokenTypes.COMMA) {
+					match(',');
+					if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+						fn.outputs.push(lookAheadToken.value);
+					}
+					else {
+						this.displayErrorMessage('valid output parameter');
+					}
+				}
+				this.match(']');
+				this.match('=');
+				if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+					fn.name(lookAheadToken.value);
+					this.match(lookAheadToken.value);
+				}
+				else {
+					this.displayErrorMessage('valid function name');
+				}
+				this.parseFunctionparameters(fn);
+				var currentCharacterPosition = lexer.getCurrentInputPosition();
+				this.match('\n');
+				lexer.setCurrentInputPosition(currentCharacterPosition + 1);
+				this.parseFunctionBody(fn);
+				method.addFunction(fn);
+			}
+			else if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+				var name = lookAheadToken.value;
+				this.match(lookAheadToken.value);
+				if(lookAheadToken.type === TokenTypes.EQUALS) {
+					fn.outputs = [name];
+					this.match('=');
+					if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+						fn.name = lookAheadToken.value;
+					}
+					else {
+						this.displayErrorMessage('valid function name');
+					}
+				}
+				else {
+					fn.name = name;
+				}
+				this.match(lookAheadToken.value);
+				this.parseFunctionparameters(fn);
+				var currentCharacterPosition = lexer.getCurrentInputPosition();
+				this.match('\n');
+				lexer.setCurrentInputPosition(currentCharacterPosition + 1);
+				this.parseFunctionBody(fn);
+				method.addFunction(fn);
+			}
+			else {
+				this.displayErrorMessage('valid function signature');
+			}
+		},
+		parseFunctionparameters: function(fn) {
+			this.match('(');
+			fn.parameters = [];
+			if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+				fn.parameters.push(lookAheadToken.value);
+				this.match(lookAheadToken.value);
+			}
+			else {
+				this.displayErrorMessage('valid function argument');
+			}
+			while(lookAheadToken.type === TokenTypes.COMMA) {
+				this.match(',');
+				if(lookAheadToken.type === TokenTypes.IDENTIFIER) {
+					fn.parameters.push(lookAheadToken.value);
+					this.match(lookAheadToken.value);
+				}
+				else {
+					this.displayErrorMessage('valid function argument');
+				}
+			}
+			this.match(')');
+		},
+		parseFunctionBody: function(fn) {
+			var remainingCode = lexer.getInput().substr(lexer.getCurrentInputPosition() - 1);
+			fn.body = remainingCode.substr(0, remainingCode.match(/\n[\s]*end\n/).index);
+			lexer.setCurrentInputPosition(lexer.getCurrentInputPosition() + fn.body.length - 2);
+			lexer.setLineNumber(lexer.getLineNumber() + (fn.body.match(new RegExp("\n", "g")) || []).length);
+			lexer.consume();
+			this.loadNextToken();
+			this.match('\n');
+			this.match('end');
+			this.match('\n');
 		},
 		parsePropertyHeader: function(propertyHeader) {
 			this.match('(');
@@ -219,6 +356,13 @@ Parser = (function(input) {
 		},
 		isEndOfInput: function() {
 			return lookAheadToken.type === TokenTypes.EOI;
+		},
+		displayErrorMessage(expectedidentifier) {
+			$("#compile-failure-message").html("Syntax Error :  Expected "	+ expectedidentifier + " but got " + lookAheadToken.value + ' at line : ' + lexer.getLineNumber() + ':' + lexer.getCharNumber());
+			$("#compile-failure").fadeTo(5000, 500).slideUp(500, function(){
+           		$("#compile-failure").slideUp(500);
+            });
+            throw new Error("Parser: Syntax error detected at match. Expected "	+ expectedidentifier + " but got " + lookAheadToken.value + ' at ' + lexer.getLineNumber() + ':' + lexer.getCharNumber());
 		}
 	}
 })();

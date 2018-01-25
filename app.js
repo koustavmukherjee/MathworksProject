@@ -215,5 +215,17 @@ var insertStringSet = function() {
 		catch(err) {
 	    	console.error(err);
 		}
-	}	
+	}
+}
+var constructorMethod = function() {
+	try {
+    	classDef = this.parse();
+    	var fn = new Fn(classDef.name, ['varargin'], '\t\t\t% Support name-value pair arguments when constructing object\n\t\t\tsetProperties(obj,nargin,varargin{:})',
+								['obj'], undefined, undefined);
+		classDef.addFunction(Properties.constants.accessSpecifierReverseEnum['public'], fn);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
 }
