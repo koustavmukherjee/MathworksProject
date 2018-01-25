@@ -1,7 +1,7 @@
 var addNumericProperty = function() {
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),'',1,0,0,0,0,0);
+		classDef.addProperty(window.Properties.propertyNameGenerator(),'',1,0,0,0,0,0,0,0);
 		editor.getDoc().setValue(classDef.toString());
 	}
 	catch(err) {
@@ -12,7 +12,18 @@ var addNumericProperty = function() {
 var addLogicalProperty = function() {
 	try {
     	classDef = this.parse();
-		classDef.addProperty(window.Properties.propertyNameGenerator(),true,1,1,0,0,0,0);
+		classDef.addProperty(window.Properties.propertyNameGenerator(),true,1,1,0,0,0,0,0,0);
+		editor.getDoc().setValue(classDef.toString());
+	}
+	catch(err) {
+    	console.error(err);
+	}
+}
+
+var addDiscreteStateProperty = function() {
+	try {
+    	classDef = this.parse();
+		classDef.addProperty(window.Properties.stateNameGenerator(),undefined,0,0,0,0,0,0,1,0);
 		editor.getDoc().setValue(classDef.toString());
 	}
 	catch(err) {
