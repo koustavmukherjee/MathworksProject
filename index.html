@@ -111,7 +111,7 @@
                 </ul>
             </div>
             <div class="btn-group-vertical">
-              <button type="button" class="property-btn btn btn-primary" style="height: 25px!important; padding: 0px;width: 120px !important;margin-top: 5px;" onclick="addDiscreteStateProperty()">Analyze</button>
+              <button type="button" class="property-btn btn btn-primary" style="height: 25px!important; padding: 0px;width: 120px !important;margin-top: 5px;" data-toggle="modal" data-target="#analyzeModal" onclick="analyze()">Analyze</button>
             </div>
         </div>
       </div>
@@ -254,6 +254,24 @@
             </div>
           </div>
 
+        </div>
+      </div>
+      <!-- Modal -->
+      <div id="analyzeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Analyzer</h4>
+            </div>
+            <div class="modal-body" id="analyzeModalContent">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

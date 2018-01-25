@@ -445,3 +445,48 @@ var addOutputToStepImpl = function() {
     	console.error(err);
 	}
 }
+
+var analyze = function() {
+	try {
+		classDef = this.parse();
+		var inputs;
+		var outputs;
+		if(	classDef 
+    		&& classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']]
+    		&& classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl']
+		) {
+			inputs = classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl'].parameters;
+			outputs = classDef.methodGroups[Properties.constants.accessSpecifierReverseEnum['protected']].functions['stepImpl'].outputs;
+		}
+		var htmlContent = '';
+		if(inputs) {
+			htmlContent += '<div class=\'analyze-header\'>INPUTS</div>';
+			for(var i = 0; i < inputs.length; i++) {
+				htmlContent += '<div class=\'analyze-content\'>' + inputs[i] + '</div>';
+			}
+		}
+		if(outputs) {
+			htmlContent += '<div class=\'analyze-header no-top-border\'>OUTPUTS</div>'
+			for(var i = 0; i < outputs.length; i++) {
+				htmlContent += '<div class=\'analyze-content\'>' + outputs[i] + '</div>';
+			}
+		}
+		if(!$.isEmptyObject(classDef.methodGroups)) {
+			htmlContent += '<div class=\'analyze-header no-top-border\'>SYSTEM OBJECT METHODS</div>';
+		}
+		for(var methodGroup in classDef.methodGroups) {
+			var method = classDef.methodGroups[methodGroup]
+			for(var functionName in method.functions) {
+				htmlContent += '<div class=\'analyze-content\'>' + functionName + '</div>';
+			}
+		}
+		if(htmlContent.trim() !== '') {
+			$("#analyzeModalContent").html(htmlContent);
+		}
+		else {
+			$("#analyzeModalContent").html('System Object has no inputs, outputs or methods.');
+		}
+	} catch(err) {
+		$("#analyzeModalContent").html('Error encountered in parsing. Please correct and try again');
+	}
+}

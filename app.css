@@ -42,3 +42,15 @@ html {
 .dropdown-menu {
 	padding: 0px;
 }
+.analyze-content {
+	border: 1px solid black;
+	border-top:0px;
+}
+.analyze-header {
+	background-color: blue;
+	color: white;
+	border: 1px solid black;
+}
+.no-top-border {
+	border-top: 0px;
+}
